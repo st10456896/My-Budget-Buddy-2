@@ -1,12 +1,16 @@
 package com.example.mybudgetbuddy
 
+import android.content.Intent
 import android.os.Bundle
+import android.util.Log
+import android.widget.Button
+import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 
-class MainActivity : AppCompatActivity() {
+class MainActivity2 : AppCompatActivity() {
     private val dailyExpensesMorning = arrayOf(50.0, 40.0, 60.0, 30.0, 70.0, 50.0, 20.0)
     private val dailyExpensesAfternoon = arrayOf(30.0, 20.0, 40.0, 10.0, 60.0, 20.0, 10.0)
     private val daysOfWeek = arrayOf("Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday")
@@ -22,7 +26,7 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        setContentView(R.layout.activity_main2)
 
         findViewById<Button>(R.id.detailsButton).setOnClickListener {
             try {

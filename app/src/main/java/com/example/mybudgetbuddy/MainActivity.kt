@@ -1,29 +1,25 @@
-package com.example.mybudgetbuddy
-
+import android.content.Intent
 import android.os.Bundle
-import androidx.activity.enableEdgeToEdge
+import android.os.Handler
+import android.os.Looper
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
+import com.example.mybudgetbuddy.MainActivity2
+import com.example.mybudgetbuddy.R
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        // buttons
-        val startButton = findViewById<Button>(R.id.startButton)
-        val exitButton = findViewById<Button>(R.id.exitButton)
+        // Hide the action bar
+        supportActionBar?.hide()
 
-        // Navigate to the main menu (Main Screen)
-        startButton.setOnClickListener {
-            val intent = Intent(this, MainMenuActivity::class.java)
+        // Use Handler to delay the transition
+        Handler(Looper.getMainLooper()).postDelayed({
+            // Start the next activity
+            val intent = Intent(this@MainActivity, MainActivity2::class.java)
             startActivity(intent)
-        }
-
-        // Exit the app
-        exitButton.setOnClickListener {
-            finishAffinity() // Closes the app
-        }
+            finish() // Finish the current activity
+        }, 4000) // Delay in milliseconds
     }
 }
