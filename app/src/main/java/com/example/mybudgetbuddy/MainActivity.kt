@@ -20,6 +20,6 @@ class MainActivity : AppCompatActivity() {
             val intent = Intent(this@MainActivity, MainActivity2::class.java)
             startActivity(intent)
             finish() // Finish the current activity
-        }, 3000) // Delay in milliseconds
+        }, 4000) // Delay in milliseconds
     }
 }
