@@ -1,54 +1,43 @@
 package com.example.mybudgetbuddy
 
-import android.content.Intent
+import android.annotation.SuppressLint
 import android.os.Bundle
-import android.util.Log
 import android.widget.Button
-import android.widget.Toast
-import androidx.activity.enableEdgeToEdge
+import android.widget.EditText
+import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
 
-class MainActivity2 : AppCompatActivity() {
-    private val dailyExpensesMorning = arrayOf(50.0, 40.0, 60.0, 30.0, 70.0, 50.0, 20.0)
-    private val dailyExpensesAfternoon = arrayOf(30.0, 20.0, 40.0, 10.0, 60.0, 20.0, 10.0)
-    private val daysOfWeek = arrayOf("Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday")
-    private val foodItems = arrayOf(
-        "Breakfast & Coffee",
-        "Sandwich & Juice",
-        "Snacks & Water",
-        "Lunch & Dessert",
-        "Pizza & Soda",
-        "Pasta & Salad",
-        "Burger & Fries"
-    )
-
+class MainActivity : AppCompatActivity() {
+    @SuppressLint("MissingInflatedId")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main2)
 
-        findViewById<Button>(R.id.detailsButton).setOnClickListener {
-            try {
-                if (dailyExpensesMorning.isEmpty() || dailyExpensesAfternoon.isEmpty()) {
-                    throw IllegalStateException("Expense arrays are empty.")
-                }
+        // UI functions/elements
+        val inputTime: EditText = findViewById(R.id.inputTimeEditText)
+        val resultText: TextView = findViewById(R.id.resultTextView)
+        val suggestButton: Button = findViewById(R.id.suggestButton)
+        val resetButton: Button = findViewById(R.id.resetButton)
 
-                val intent = Intent(this, DetailedActivity::class.java).apply {
-                    putExtra("morningExpenses", dailyExpensesMorning.toDoubleArray())
-                    putExtra("afternoonExpenses", dailyExpensesAfternoon.toDoubleArray())
-                    putExtra("daysOfWeek", daysOfWeek)
-                    putExtra("foodItems", foodItems)
-                }
-                startActivity(intent)
-            } catch (e: IllegalStateException) {
-                Log.e("MainActivity", "Error navigating to Detailed Screen", e)
-                Toast.makeText(this, "No expense data available. Please try again later.", Toast.LENGTH_SHORT).show()
-            } catch (e: Exception) {
-                Log.e("MainActivity", "Unexpected error", e)
-                Toast.makeText(this, "Something went wrong. Please try again.", Toast.LENGTH_SHORT).show()
-            }
+        suggestButton.setOnClickListener {
+            val timeOfDay = inputTime.text.toString().trim().lowercase()
+            val suggestion = getMealSuggestion(timeOfDay)
+            resultText.text = suggestion
+        }
+
+        resetButton.setOnClickListener {
+            inputTime.text.clear()
+            resultText.text = ""
         }
     }
+    //Functions in order to get meal suggestions according to time of day
+    private fun getMealSuggestion(timeOfDay: String): String {
+        return if (timeOfDay == "morning") "Breakfast: Bacon"
+        else if (timeOfDay == "mid-morning") "Light Snack: Apple"
+        else if (timeOfDay == "afternoon") "Lunch: Sandwich"
+        else if (timeOfDay == "mid-afternoon") "Quick Bite: Peanuts"
+        else if (timeOfDay == "dinner") "Main Course: Pasta"
+        else if (timeOfDay == "after dinner") "Dessert: Ice Cream"
+        else "Invalid input. Please enter a valid time of day."
+    }
 }
-
